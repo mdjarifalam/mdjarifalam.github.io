@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>My Sketch</title>
+
+    <!-- Load the Processing.js library -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.0/processing.min.js"></script>
+	</head>
+	<body>
+		<script type="application/processing">
+			int limit = 100;
+
+			int totalSteps = 0;
+			int state = 0;
+			int step = 1;
+			int x = 0;
+			int y = 0;
+			int px = 0;
+			int py = 0;
+			int stepSize= 15;
+			int numSteps = 1;
+			int turnCounter = 1;
+
+			void setup(){
+				size (800,800);
+				background(0);
+				//frameRate(1);
+				x = width / 2;
+				y = height / 2;
+				px = x;
+				py = y;
+
+				int column = width/2;
+				int row = height/2;
+				totalSteps = row * column;
+			}
+
+			void draw(){
+
+			//while (step <= totalSteps){
+					strokeWeight(1);
+					stroke (#FF8002);
+					line(x,y,px,py);
+					px = x;
+					py = y;
+
+				if (prime(step) == true){
+					stroke (#FF9001);
+					strokeWeight(stepSize/2);
+					point(x,y);
+					//textAlign(CENTER,CENTER);
+					//textSize(stepSize/3);
+					//text(step,x,y);
+
+					strokeWeight(1);
+				}
+				else{
+					stroke (#4B4B4B);
+					strokeWeight(stepSize/2);
+					//point(x,y);
+
+					textAlign(CENTER,CENTER);
+					//textSize(stepSize/3);
+					//text(step,x,y);
+					//point(x,y);
+				}
+
+				switch (state) {
+					case 0:
+						x += stepSize;
+						break;
+					case 1:
+						y -= stepSize;
+						break;
+					case 2:
+						x -= stepSize;
+						break;
+					case 3:
+						y += stepSize;
+						break;
+				}
+
+				if (step % numSteps == 0) {
+					state = (state + 1) % 4;
+					turnCounter++;
+					if (turnCounter % 2 == 0) {
+						numSteps++;
+					}
+				}
+				step++;
+			//}
+
+			//save("PrimeSpirals.bmp");
+			}
+
+			//prime kina dekhbe ei function
+			boolean prime (int t){
+				if (t == 1) return false;
+				for (int i = 2; i < t; i++){
+						if (t%i == 0){
+							return false;
+						}
+					}
+					return true;
+			}
+
+		</script>
+		<canvas> </canvas>
+	</body>
+</html>
